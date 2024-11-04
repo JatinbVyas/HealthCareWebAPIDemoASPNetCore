@@ -15,7 +15,11 @@ namespace HealthCareAppointments.DBContext
             {
                 context.AddRange
                 (
-                    new HealthCareProfessional { NameofHealthCareProfessional = "Default Health Professional", Specialty = "General Physician" }
+                    new HealthCareProfessional { NameofHealthCareProfessional = "Dr. Ashutosh", Specialty = "General Physician" },
+                    new HealthCareProfessional { NameofHealthCareProfessional = "Dr. Munshi", Specialty = "MD Physio" },
+                    new HealthCareProfessional { NameofHealthCareProfessional = "Dr. Kale", Specialty = "General Physician" },
+                    new HealthCareProfessional { NameofHealthCareProfessional = "Dr. Gorpode", Specialty = "Eye Sergen" },
+                    new HealthCareProfessional { NameofHealthCareProfessional = "Dr. Tope", Specialty = "Heart Sergen" }
                 );
             }
 
