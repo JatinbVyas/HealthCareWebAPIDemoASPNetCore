@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AppointmentViewModel>
+@{
+    Layout = "_HealthLayout";
+}
+
+<h3 class="my-5">
+    Appointment List
+</h3>
+<div class="container">
+    <a class="btn btn-primary mb-2" asp-controller="Appointment" asp-action="BookAppointment">
+        <h4>Book Appointment</h4>
+    </a>
+    <br />
+    @if (TempData["SMsg"] != null)
+    {
+     <div class="alert alert-success">
+         <strong>@TempData["SMsg"]</strong>@* 
+         <button type="button" class="btn-close" data-dismiss="alert">
+             <span>&times;</span>
+         </button> *@
+     </div>   
+    }
+    <br />
+    @if (TempData["EMsg"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>@TempData["EMsg"]</strong>@*
+        <button type="button" class="btn-close" data-dismiss="alert">
+        <span>&times;</span>
+        </button> *@
+        </div>
+    }
+    <table class="table table-striped table-bordered" style="border-color:black">
+        <thead>
+            <tr>
+                <th scope="col" class="col-4">Health Professional Name</th>
+                <th scope="col" class="col-2">Appointment Start Time</th>
+                <th scope="col" class="col-2">Appointment End Time</th>
+                <th scope="col" class="col-2">Appointment Status</th>
+                <th scope="col" class="col-2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.HealthCareProfessionalName</td>
+                    <td>@appointment.AppointmentStartTime</td>
+                    <td>@appointment.AppointmentEndTime</td>
+                    <td>@appointment.AppointmentStatus</td>
+                    <td>
+                        <a asp-controller="Appointment" asp-action="CancelAppointment" asp-route-appointmentId="@appointment.AppointmentId" data-toggle="tooltip" data-placement="top" title="Cancel Appointment">
+                            <img src="~/Images/cancelImage.png" width="25%" height="5%" alt="Cancel Appointment" data-toggle="tooltip" data-placement="top" title="Cancel Appointment" />
+                        </a> &nbsp; &nbsp; &nbsp;
+                        <a asp-controller="Appointment" asp-action="CompleteAppointment" asp-route-appointmentId="@appointment.AppointmentId" data-toggle="tooltip" data-placement="top" title="Complete Appointment">
+                            <img src="~/Images/completeappointment.png" width="25%" height="5%" alt="Complete Appointment" data-toggle="tooltip" data-placement="top" title="Complete Appointment" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
