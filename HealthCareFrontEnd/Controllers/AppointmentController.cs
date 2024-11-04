@@ -86,13 +86,24 @@ namespace HealthCareFrontEnd.Controllers
         [HttpPost]
         public async Task<IActionResult> BookAppointment(BookAppointmentViewModel bookAppointmentViewModel)
         {
+            if (bookAppointmentViewModel.HealthCareProfessionalId < 1)
+            {
+                TempData["EMsg"] = "Please select Health professionals";
+                return RedirectToAction("BookAppointment", "Appointment");
+            }
+            DateTime dateTime;
+            if (!DateTime.TryParse(bookAppointmentViewModel.AppointmentStartTime.ToString(), out dateTime))
+            {
+                TempData["EMsg"] = "Please enter valid date";
+                return RedirectToAction("BookAppointment", "Appointment");
+            }
             if (bookAppointmentViewModel != null)
             {
                 bookAppointmentViewModel.UserEmail = _userEmail;
                 var bookAppointdataInJson = JsonConvert.SerializeObject(bookAppointmentViewModel);
                 HttpResponseMessage response = await _httpClient.PostAsync(_httpClient.BaseAddress + "appointments/BookAppointment", new StringContent(bookAppointdataInJson, Encoding.UTF8, "application/json"));
 
-                if (response.IsSuccessStatusCode) 
+                if (response.IsSuccessStatusCode)
                 {
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     ResponceViewModel<AppointmentViewModel> responceViewModel = new ResponceViewModel<AppointmentViewModel>();
@@ -105,7 +116,7 @@ namespace HealthCareFrontEnd.Controllers
                     {
                         TempData["EMsg"] = responceViewModel.ReturnMessage;
                     }
-                    return RedirectToAction("ViewAppointments","Appointment");
+                    return RedirectToAction("ViewAppointments", "Appointment");
                 }
             }
             return View(bookAppointmentViewModel);

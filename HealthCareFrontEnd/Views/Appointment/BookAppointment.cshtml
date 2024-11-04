@@ -7,7 +7,13 @@
     <h3 class="my-5">
         Book Appointment
     </h3>
-
+    <br />
+    @if (TempData["EMsg"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>@TempData["EMsg"]</strong>
+        </div>
+    }
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="col-6">
